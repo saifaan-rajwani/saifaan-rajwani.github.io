@@ -1,6 +1,6 @@
 # Welcome to Saifaan's HTML learning Website
-## In majour collaboration with @sahirpunjwani/https://github.com/sahirpunjwani
-## Inspired from " https://github.com/sahirpunjwani/HTML_learn "
+## In majour collaboration with @sahirpunjwani/   https://github.com/sahirpunjwani
+## Inspired from " https://github.com/     sahirpunjwani/HTML_learn "
 ### Here you will not need to take templates or any other help from others!
 #### Lets start!
 ```html
