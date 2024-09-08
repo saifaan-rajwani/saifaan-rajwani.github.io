@@ -7,6 +7,9 @@
 <!doctype html>
 <html>
   <head>
+<
+link
+ rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <meta charset="utf-8">
     <!--css-->
     <style>
