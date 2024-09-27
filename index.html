@@ -1,236 +1,70 @@
-<!doctype html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Photo gallery</title>
-    </head>
-    <body>
-        <style>
-            body{
-                text-align: center;
-                color: lightskyblue;
-                background-color: blue;
-                font-size: 30px;
-                padding-bottom: 50px;
-            }
-            .container{
-                background-color: white;
-                border: 6px solid black;
-                height: 100%;
-                width: 60%;
-                position: absolute;
-                top: 100px;
-                right: 20%;
-            }
-            .img1{
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-image: url("download (2).jpeg");
-                text-align: center;
-                border-right: 10px solid black;
-                height: 25%;
-                width: 49%;
-                background-color: darkcyan;
-                border-left: 5px solid black;
-                border-bottom: 5px solid black;
-                border-top: 5px solid black;
-            }
-             .img2{
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-image: url("download (4).jpeg");
-                text-align: center;
-                border-right: 10px solid black;
-                height: 25%;
-                width: 49%;
-                background-color: darkcyan;
-                border-left: 5px solid black;
-                border-bottom: 5px solid black;
-                border-top: 5px solid black;
-            }
-             .img3{
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-image: url("download(2).jpeg");
-                text-align: center;
-                border-right: 10px solid black;
-                height: 25%;
-                width: 49%;
-                background-color: darkcyan;
-                border-left: 5px solid black;
-                border-bottom: 5px solid black;
-                border-top: 5px solid black;
-            }
-            .img4{
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-image: url("download (6).jpeg");
-                text-align: center;
-                border-right: 10px solid black;
-                height: 25%;
-                width: 49%;
-                background-color: darkcyan;
-                border-left: 5px solid black;
-                border-bottom: 5px solid black;
-                border-top: 5px solid black;
-            }
-             .img5{
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-image: url("download (7).jpeg");
-                text-align: center;
-                border-right: 10px solid black;
-                height: 25%;
-                width: 49%;
-                background-color: darkcyan;
-                border-left: 5px solid black;
-                border-bottom: 5px solid black;
-                border-top: 5px solid black;
-            }
-             .img6{
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-image: url("download(8).jpeg");
-                text-align: center;
-                border-right: 10px solid black;
-                height: 25%;
-                width: 49%;
-                background-color: darkcyan;
-                border-left: 5px solid black;
-                border-bottom: 5px solid black;
-                border-top: 5px solid black;
-            }
-            .img-left{
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-image: url("download (3).jpeg");
-                text-align: center;
-                border-right: 5px solid black;
-                height: 25%;
-                width: 49%;
-                background-color: darkcyan;
-                border-left: 10px solid black;
-                border-bottom: 5px solid black;
-                border-top: 5px solid black;
-                float: right;
-                position: absolute;
-                top: 0px;
-                right:0px;
-            }
-            .img-left1{
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-image: url("download (1).jpeg");
-                text-align: center;
-                border-right: 5px solid black;
-                height: 25%;
-                width: 49%;
-                background-color: darkcyan;
-                border-left: 10px solid black;
-                border-bottom: 5px solid black;
-                border-top: 10px solid black;
-                float: right;
-                position: absolute;
-                top: 25%;
-                right:0px;
-            }
-            .img-left2{
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-image: url("download (5).jpeg");
-                text-align: center;
-                border-right: 5px solid black;
-                height: 25%;
-                width: 49%;
-                background-color: darkcyan;
-                border-left: 10px solid black;
-                border-bottom: 5px solid black;
-                border-top: 10px solid black;
-                float: right;
-                position: absolute;
-                top: 50%;
-                right:0px;
-            }
-            .img-left3{
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-image: url("download (3).jpeg");
-                text-align: center;
-                border-right: 5px solid black;
-                height: 25%;
-                width: 49%;
-                background-color: darkcyan;
-                border-left: 10px solid black;
-                border-bottom: 5px solid black;
-                border-top: 5px solid black;
-                float: right;
-                position: absolute;
-                top: 75%;
-                right:0px;
-            }
-            .img-left4{
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-image: url("download (1).jpeg");
-                text-align: center;
-                border-right: 5px solid black;
-                height: 100%;
-                width: 49%;
-                background-color: darkcyan;
-                border-left: 10px solid black;
-                border-bottom: 5px solid black;
-                border-top: 10px solid black;
-                float: right;
-                position: absolute;
-                top: 125%;
-                right:0px;
-            }
-            .img-left5{
-                background-size: 100% 100%;
-                background-repeat: no-repeat;
-                background-image: url("download (5).jpeg");
-                text-align: center;
-                border-right: 5px solid black;
-                height: 25%;
-                width: 49%;
-                background-color: darkcyan;
-                border-left: 10px solid black;
-                border-bottom: 5px solid black;
-                border-top: 10px solid black;
-                float: right;
-                position: absolute;
-                top: 150%;
-                right:0px;
-            }
-        </style>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery</title>
+    <style>
+        * {
+  box-sizing: border-box;
+}
 
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #f5f6f7;
+}
 
-        <h1>Animal Photo Gallery</h1>
-        <div class="container">
-            <div class="img1">
-            </div>
-            <div class="img2">
-            </div>
-            <div class="img3">
-            </div>
-             <div class="img4">
-            </div>
-            <div class="img5">
-            </div>
-            <div class="img6">
-            </div>
-            <div class="img-left">
-            </div>
-            <div class="img-left1">
-            </div>
-            <div class="img-left2">
-            </div>
-            <div class="img-left3">
-            </div>
-            <div class="img-left4">
-            </div>
-            <div class="img-left5">
-            </div>
-        </div>
-    </body>
+.header {
+  text-align: center;
+  text-transform: uppercase;
+  padding: 32px;
+  background-color: #0a0a23;
+  color: #fff;
+  border-bottom: 4px solid #fdb347;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 10px;
+}
+
+.gallery img {
+  width: 100%;
+  max-width: 350px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.gallery::after {
+  content: "";
+  width: 350px;
+}
+
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <h1> Animal Photo Gallery </h1>
+    </header>
+    <div class="gallery">
+      <img src="download (1)">
+      <img src="download (1)">
+      <img src="download (1)">
+      <img src="download (1)">
+      <img src="download (1)">
+      <img src="download (1)">
+      <img src="download (1)">
+      <img src="download (1)">
+      <img src="download (1)">
+    </div>
+  </body>
 </html>
