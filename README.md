@@ -1,2 +1,1 @@
-# Welcome To **Animal Photo Gallery**
-## You can view it on _https://saifaan-rajwani.github.io/_
+# Nothing here you can exit
