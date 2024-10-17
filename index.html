@@ -1,35 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Translator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-        input, select, button {
-            padding: 10px;
-            margin: 5px;
-            font-size: 16px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Simple Translator</h1>
-    <input type="text" id="textInput" placeholder="Enter text" />
-    <select id="languageSelect">
-        <option value="es">Spanish</option>
-        <option value="en">English</option>
-    </select>
-    <button onclick="translateText()">Translate</button>
-    <p id="output"></p>
-
-    <script>
-        const dictionary = {
-            "hello": "hola",
+"hello": "hola
             "goodbye": "adiós",
             "please": "por favor",
             "thank you": "gracias",
@@ -41,20 +10,3 @@
             "gracias": "thank you",
             "sí": "yes",
             "no": "no"
-        };
-
-        function translateText() {
-            const textInput = document.getElementById('textInput').value.trim().toLowerCase();
-            const language = document.getElementById('languageSelect').value;
-            const translation = dictionary[textInput];
-
-            let output = "Translation not found!";
-            if (translation) {
-                output = language === 'es' ? translation : dictionary[translation];
-            }
-
-            document.getElementById('output').textContent = output;
-        }
-    </script>
-</body>
-</html>
