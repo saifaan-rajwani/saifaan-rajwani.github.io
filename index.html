@@ -1,13 +1,40 @@
-"hello": "hola
-            "goodbye": "adiós",
-            "please": "por favor",
-            "thank you": "gracias",
-            "yes": "sí",
-            "no": "no",
-            "hola": "hello",
-            "adiós": "goodbye",
-            "por favor": "please",
-            "gracias": "thank you",
-            "sí": "yes",
-            "no": "no"
+import chess
+import chess.engine
 
+def print_board(board):
+    print(board)
+
+def main():
+    # Initialize a chess board
+    board = chess.Board()
+    
+    print("Welcome to Console Chess!")
+    print_board(board)
+
+    while not board.is_game_over():
+        try:
+            # Get the player's move
+            move = input("Enter your move (e.g., e2e4): ")
+            # Make the move
+            board.push_san(move)
+            print_board(board)
+
+            # Check if the game is over after the player's move
+            if board.is_game_over():
+                break
+
+            # Use the engine to make a move for the opponent (you can remove this if you want to play against another human)
+            with chess.engine.SimpleEngine.popen_uci("path/to/your/engine") as engine:
+                result = engine.play(board, chess.engine.Limit(time=1))
+                board.push(result.move)
+                print("Opponent's move:", result.move)
+                print_board(board)
+
+        except Exception as e:
+            print("Invalid move, please try again. Error:", e)
+
+    print("Game Over!")
+    print("Result:", board.result())
+
+if __name__ == "__main__":
+    main()
