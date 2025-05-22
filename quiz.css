@@ -1,118 +1,168 @@
-body{
+/* Overall Styling */
+body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #fefefe;
     color: #333;
 }
+
 h1, h2 {
     font-size: 22px;
-  }
-.a:hover, .a:active {
-  background-color: rgb(178, 193, 223);
-  color: white;
-  border: 10px double white;
-}
-.a{
-  background-color: white;
-  color: rgb(178, 193, 223);
-  border: 10px double rgb(178, 193, 223);
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  height: 100%;
-  width: 100%;
-  font-size: 40px;
-  right: 40%;
-  position: absolute;
-  max-height: 60px;
-  maz-wight: 200px;
-}
-.question{
+    margin: 20px 0;
     text-align: center;
-    top: 40%;
-    font-size: 50px;
 }
+
+.a {
+    background-color: white;
+    color: rgb(178, 193, 223);
+    border: 10px double rgb(178, 193, 223);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    max-width: 200px;
+    font-size: 40px;
+    position: absolute;
+    right: 40%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 12px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.a:hover,
+.a:active {
+    background-color: rgb(178, 193, 223);
+    color: white;
+    border-color: white;
+    cursor: pointer;
+}
+
+.question {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 50px;
+    padding: 0 15px;
+}
+
 .container {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;        
-      height:1000px;
-      margin: auto;
-      width: 90%;
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    gap: 15px;
+}
 
-    .item {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      font-size: 16px;
-      border: none;
-      background-color: #4CAF50;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-       text-decoration:none;
-    }
 .item {
-    font-size: 1rem;
-  }
-    .item:hover {
-      background-color: #45a049;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.item:hover {
+    background-color: #45a049;
+}
+
+img {
+    max-height: 150px;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Hide options by default on mobile */
+#toggle {
+    display: none;
+}
+
+label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: white;
+    color: rgb(178, 193, 223);
+    cursor: pointer;
+    border: 10px double rgb(178, 193, 223);
+    position: absolute;
+    right: 45%;
+    top: 20px;
+    border-radius: 12px;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 18px;
+    user-select: none;
+}
+
+label:hover {
+    background-color: rgb(178, 193, 223);
+    color: white;
+}
+
+.hidden-text {
+    display: none;
+    margin-top: 70px;
+    padding: 10px;
+}
+
+#toggle:checked + label + .hidden-text {
+    display: block;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+    .a {
+        position: static;
+        max-width: 100%;
+        font-size: 28px;
+        width: 100%;
+        margin: 20px auto;
+        display: block;
+        border-width: 5px;
     }
 
-    img{
-      height: 99%;
-      width: 99%;
+    .question {
+        font-size: 28px;
+        margin-top: 30px;
+        padding: 0 10px;
     }
-    @media screen and (max-width: 600px) {
-      .quiz-container {
+
+    .container {
         padding: 15px;
-      }
-
-
-
-    #toggle {
-      display: none;
+        max-width: 100%;
+        width: 100%;
     }
 
     label {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: white;
-      color: rgb(178, 193, 223);
-      cursor: pointer;
-      border: 10px double rgb(178, 193, 223);
-      right:45%;
-      position: absolute;
+        right: 50%;
+        transform: translateX(50%);
+        top: 10px;
+        padding: 12px 15px;
+        font-size: 16px;
+        border-width: 5px;
     }
 
-    .hidden-text {
-      display: none;
-      top: 200px;
-      padding: 10px;
-      position: absolute;
+    .item {
+        font-size: 1rem;
+        padding: 10px;
     }
 
-    #toggle:checked + label + .hidden-text {
-      display: block;
+    img {
+        max-height: 120px;
     }
-
-label:hover {
-      display: inline-block;
-      background-color: rgb(178, 193, 223);
-      color: white;
-      cursor: pointer;
-      border: 10px double white;
-      width: 100%;
-      padding: 12px;
-      font-size: 1rem;
-    }
+}
