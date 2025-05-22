@@ -1,11 +1,186 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="quiz.css">
-        <title>Quiz Animals</title>
-    </head>
-    <body>
-        <h1 class="one">QUIZ <br>ANIMALS</h1>
-        <a href="questionone.html" class="a" target="_self"> LETS GO </a>
-    </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Animal Quiz</title>
+  <style>
+    body {
+      background: #121212;
+      color: #eee;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    #container {
+      max-width: 500px;
+      width: 100%;
+      background: #1e1e1e;
+      border-radius: 12px;
+      padding: 30px 25px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-weight: 700;
+      font-size: 28px;
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    .question-block {
+      background: #2a2a2a;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .question-text {
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    /* Hide default radio buttons */
+    input[type="radio"] {
+      display: none;
+    }
+    /* Label styles */
+    label {
+      display: block;
+      background: #3a3a3a;
+      color: #eee;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      border: 2px solid transparent;
+    }
+    label:hover {
+      background: #505050;
+    }
+    /* Show selection */
+    input[type="radio"]:checked + label {
+      background: #4caf50;
+      border-color: #66bb6a;
+      color: white;
+      font-weight: 700;
+    }
+    /* Indicate correct answers */
+    /* Each question has a correct answer radio button with a specific class for styling */
+    /* When the correct radio is checked, label gets a green border */
+    input[type="radio"].correct:checked + label {
+      box-shadow: 0 0 10px 2px #4caf50aa;
+      border-color: #4caf50;
+    }
+    /* When a wrong answer is selected, show red border */
+    input[type="radio"]:checked:not(.correct) + label {
+      box-shadow: 0 0 10px 2px #e53935aa;
+      border-color: #e53935;
+      background: #722222;
+      color: #ffcdd2;
+      font-weight: 700;
+    }
+    /* Instructions */
+    .instructions {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>Animal Quiz</h1>
+    <p class="instructions">Select an answer for each question to see if it's correct or not.</p>
+    <form>
+      <!-- Question 1 -->
+      <div class="question-block">
+        <div class="question-text">Which animal is known as the 'King of the Jungle'?</div>
+        <input type="radio" id="q1a1" name="q1" class="correct" />
+        <label for="q1a1">Lion</label>
+
+        <input type="radio" id="q1a2" name="q1" />
+        <label for="q1a2">Elephant</label>
+
+        <input type="radio" id="q1a3" name="q1" />
+        <label for="q1a3">Tiger</label>
+
+        <input type="radio" id="q1a4" name="q1" />
+        <label for="q1a4">Giraffe</label>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question-block">
+        <div class="question-text">What is the fastest land animal?</div>
+        <input type="radio" id="q2a1" name="q2" class="correct" />
+        <label for="q2a1">Cheetah</label>
+
+        <input type="radio" id="q2a2" name="q2" />
+        <label for="q2a2">Lion</label>
+
+        <input type="radio" id="q2a3" name="q2" />
+        <label for="q2a3">Horse</label>
+
+        <input type="radio" id="q2a4" name="q2" />
+        <label for="q2a4">Kangaroo</label>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="question-block">
+        <div class="question-text">Which bird is known for its impressive memory and tool use?</div>
+        <input type="radio" id="q3a1" name="q3" class="correct" />
+        <label for="q3a1">Crow</label>
+
+        <input type="radio" id="q3a2" name="q3" />
+        <label for="q3a2">Parrot</label>
+
+        <input type="radio" id="q3a3" name="q3" />
+        <label for="q3a3">Eagle</label>
+
+        <input type="radio" id="q3a4" name="q3" />
+        <label for="q3a4">Sparrow</label>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="question-block">
+        <div class="question-text">How many legs does a spider have?</div>
+        <input type="radio" id="q4a1" name="q4" class="correct" />
+        <label for="q4a1">8</label>
+
+        <input type="radio" id="q4a2" name="q4" />
+        <label for="q4a2">6</label>
+
+        <input type="radio" id="q4a3" name="q4" />
+        <label for="q4a3">10</label>
+
+        <input type="radio" id="q4a4" name="q4" />
+        <label for="q4a4">4</label>
+      </div>
+
+      <!-- Question 5 -->
+      <div class="question-block">
+        <div class="question-text">What is a group of lions called?</div>
+        <input type="radio" id="q5a1" name="q5" class="correct" />
+        <label for="q5a1">Pride</label>
+
+        <input type="radio" id="q5a2" name="q5" />
+        <label for="q5a2">Herd</label>
+
+        <input type="radio" id="q5a3" name="q5" />
+        <label for="q5a3">Pack</label>
+
+        <input type="radio" id="q5a4" name="q5" />
+        <label for="q5a4">Flock</label>
+      </div>
+    </form>
+  </div>
+</body>
 </html>
