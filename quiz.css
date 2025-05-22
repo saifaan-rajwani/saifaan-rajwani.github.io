@@ -2,7 +2,7 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f4f8; /* Soft light blue background */
+    background-color: rgb(50,205,50); /* Soft light blue background */
     color: #333;
     min-height: 100vh;
     display: flex;
