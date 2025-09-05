@@ -2,43 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Chess</title>
+  <title>Super Saiyan Chess</title>
   <style>
   body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: darkblue;
+    background: #1e1e1e;
     margin: 0;
     flex-direction: column;
   }
   #board {
     display: grid;
-    grid-template-columns: repeat(8, 70px);
-    grid-template-rows: repeat(8, 70px);
-    border: 4px solid blue;
+    grid-template-columns: repeat(8, 60px);
+    grid-template-rows: repeat(8, 60px);
+    border: 4px solid #000;
     box-shadow: 0 0 20px rgba(0,0,0,0.7);
   }
   .cell {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 50px;
+    font-size: 42px;
     font-family: "Segoe UI Symbol", "Noto Sans Symbols2", sans-serif;
     cursor: pointer;
     user-select: none;
   }
-  .white { background: skyblue; }
-  .black { background: lightblue; }
-  .highlight { background: blue !important; }
+  .white { background: #f0d9b5; }
+  .black { background: #b58863; }
+  .highlight { background: #f6f669 !important; }
 </style>
 </head>
 <body>
+  <h1>♚ Super Saiyan Chess ♚</h1>
   <div id="board"></div>
-  < id="turn">Turn: White</>
+  <h2 id="turn">Turn: White</h2>
   <script>
     const board=document.getElementById("board");
     const turnDisplay=document.getElementById("turn");
@@ -156,7 +157,41 @@
             if(!t||(isWhite&&isBlackPiece(t))||(!isWhite&&isWhitePiece(t))) moves.push([r,c]);
           }
         });
-        // Castling is already here...
+
+        // --- Castling checks ---
+        if(!isKingInCheck(color,state)){ 
+          if(isWhite){
+            if(!hasMoved.whiteKing){
+              // kingside
+              if(!hasMoved.whiteRookH && !state["7-5"] && !state["7-6"]){
+                let s1=clonePieces(state); delete s1["7-4"]; s1["7-5"]=symbols.white.king;
+                let s2=clonePieces(state); delete s2["7-4"]; s2["7-6"]=symbols.white.king;
+                if(!isKingInCheck("white",s1) && !isKingInCheck("white",s2)) moves.push([7,6]);
+              }
+              // queenside
+              if(!hasMoved.whiteRookA && !state["7-1"] && !state["7-2"] && !state["7-3"]){
+                let s1=clonePieces(state); delete s1["7-4"]; s1["7-3"]=symbols.white.king;
+                let s2=clonePieces(state); delete s2["7-4"]; s2["7-2"]=symbols.white.king;
+                if(!isKingInCheck("white",s1) && !isKingInCheck("white",s2)) moves.push([7,2]);
+              }
+            }
+          } else {
+            if(!hasMoved.blackKing){
+              // kingside
+              if(!hasMoved.blackRookH && !state["0-5"] && !state["0-6"]){
+                let s1=clonePieces(state); delete s1["0-4"]; s1["0-5"]=symbols.black.king;
+                let s2=clonePieces(state); delete s2["0-4"]; s2["0-6"]=symbols.black.king;
+                if(!isKingInCheck("black",s1) && !isKingInCheck("black",s2)) moves.push([0,6]);
+              }
+              // queenside
+              if(!hasMoved.blackRookA && !state["0-1"] && !state["0-2"] && !state["0-3"]){
+                let s1=clonePieces(state); delete s1["0-4"]; s1["0-3"]=symbols.black.king;
+                let s2=clonePieces(state); delete s2["0-4"]; s2["0-2"]=symbols.black.king;
+                if(!isKingInCheck("black",s1) && !isKingInCheck("black",s2)) moves.push([0,2]);
+              }
+            }
+          }
+        }
       }
       function lineMoves(dirs){dirs.forEach(([dr,dc])=>{let r=row+dr,c=col+dc;while(r>=0&&r<8&&c>=0&&c<8){let t=state[`${r}-${c}`];if(!t)moves.push([r,c]);else{if((isWhite&&isBlackPiece(t))||(!isWhite&&isWhitePiece(t)))moves.push([r,c]);break;}r+=dr;c+=dc;}});}
       return moves;
