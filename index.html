@@ -1,186 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Animal Quiz</title>
+  <meta charset="UTF-8">
+  <title>Super Saiyan Chess</title>
   <style>
-    body {
-      background: #121212;
-      color: #eee;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
-    }
-    #container {
-      max-width: 500px;
-      width: 100%;
-      background: #1e1e1e;
-      border-radius: 12px;
-      padding: 30px 25px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-    }
-    h1 {
-      margin-bottom: 20px;
-      font-weight: 700;
-      font-size: 28px;
-      text-align: center;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-    }
-    .question-block {
-      background: #2a2a2a;
-      padding: 20px;
-      border-radius: 10px;
-    }
-    .question-text {
-      font-weight: 600;
-      font-size: 18px;
-      margin-bottom: 15px;
-    }
-    /* Hide default radio buttons */
-    input[type="radio"] {
-      display: none;
-    }
-    /* Label styles */
-    label {
-      display: block;
-      background: #3a3a3a;
-      color: #eee;
-      padding: 12px 15px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      user-select: none;
-      border: 2px solid transparent;
-    }
-    label:hover {
-      background: #505050;
-    }
-    /* Show selection */
-    input[type="radio"]:checked + label {
-      background: #4caf50;
-      border-color: #66bb6a;
-      color: white;
-      font-weight: 700;
-    }
-    /* Indicate correct answers */
-    /* Each question has a correct answer radio button with a specific class for styling */
-    /* When the correct radio is checked, label gets a green border */
-    input[type="radio"].correct:checked + label {
-      box-shadow: 0 0 10px 2px #4caf50aa;
-      border-color: #4caf50;
-    }
-    /* When a wrong answer is selected, show red border */
-    input[type="radio"]:checked:not(.correct) + label {
-      box-shadow: 0 0 10px 2px #e53935aa;
-      border-color: #e53935;
-      background: #722222;
-      color: #ffcdd2;
-      font-weight: 700;
-    }
-    /* Instructions */
-    .instructions {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 16px;
-      color: #aaa;
-    }
-  </style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #1e1e1e;
+    margin: 0;
+    flex-direction: column;
+  }
+  #board {
+    display: grid;
+    grid-template-columns: repeat(8, 60px);
+    grid-template-rows: repeat(8, 60px);
+    border: 4px solid #000;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+  }
+  .cell {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 42px;
+    font-family: "Segoe UI Symbol", "Noto Sans Symbols2", sans-serif;
+    cursor: pointer;
+    user-select: none;
+  }
+  .white { background: #f0d9b5; }
+  .black { background: #b58863; }
+  .highlight { background: #f6f669 !important; }
+</style>
 </head>
 <body>
-  <div id="container">
-    <h1>Animal Quiz</h1>
-    <p class="instructions">Select an answer for each question to see if it's correct or not.</p>
-    <form>
-      <!-- Question 1 -->
-      <div class="question-block">
-        <div class="question-text">Which animal is known as the 'King of the Jungle'?</div>
-        <input type="radio" id="q1a1" name="q1" class="correct" />
-        <label for="q1a1">Lion</label>
+  <h1>♚ Super Saiyan Chess ♚</h1>
+  <div id="board"></div>
+  <h2 id="turn">Turn: White</h2>
+  <script>
+    const board=document.getElementById("board");
+    const turnDisplay=document.getElementById("turn");
 
-        <input type="radio" id="q1a2" name="q1" />
-        <label for="q1a2">Elephant</label>
+    const symbols={
+      white:{king:"♔",queen:"♕",rook:"♖",bishop:"♗",knight:"♘",pawn:"♙"},
+      black:{king:"♚",queen:"♛",rook:"♜",bishop:"♝",knight:"♞",pawn:"♟"}
+    };
 
-        <input type="radio" id="q1a3" name="q1" />
-        <label for="q1a3">Tiger</label>
+    let pieces={};
+    let currentTurn="white";
+    let selected=null;
+    let validMoves=[];
+    let enPassantTarget=null;
+    let hasMoved={
+      whiteKing:false,whiteRookA:false,whiteRookH:false,
+      blackKing:false,blackRookA:false,blackRookH:false
+    };
 
-        <input type="radio" id="q1a4" name="q1" />
-        <label for="q1a4">Giraffe</label>
-      </div>
+    function setupPieces(){
+      pieces={
+        "0-0":symbols.black.rook,"0-1":symbols.black.knight,"0-2":symbols.black.bishop,"0-3":symbols.black.queen,
+        "0-4":symbols.black.king,"0-5":symbols.black.bishop,"0-6":symbols.black.knight,"0-7":symbols.black.rook,
+        "1-0":symbols.black.pawn,"1-1":symbols.black.pawn,"1-2":symbols.black.pawn,"1-3":symbols.black.pawn,
+        "1-4":symbols.black.pawn,"1-5":symbols.black.pawn,"1-6":symbols.black.pawn,"1-7":symbols.black.pawn,
+        "6-0":symbols.white.pawn,"6-1":symbols.white.pawn,"6-2":symbols.white.pawn,"6-3":symbols.white.pawn,
+        "6-4":symbols.white.pawn,"6-5":symbols.white.pawn,"6-6":symbols.white.pawn,"6-7":symbols.white.pawn,
+        "7-0":symbols.white.rook,"7-1":symbols.white.knight,"7-2":symbols.white.bishop,"7-3":symbols.white.queen,
+        "7-4":symbols.white.king,"7-5":symbols.white.bishop,"7-6":symbols.white.knight,"7-7":symbols.white.rook,
+      };
+    }
 
-      <!-- Question 2 -->
-      <div class="question-block">
-        <div class="question-text">What is the fastest land animal?</div>
-        <input type="radio" id="q2a1" name="q2" class="correct" />
-        <label for="q2a1">Cheetah</label>
+    function renderBoard(){
+      board.innerHTML="";
+      for(let r=0;r<8;r++){
+        for(let c=0;c<8;c++){
+          const cell=document.createElement("div");
+          cell.className="cell "+((r+c)%2===0?"white":"black");
+          cell.dataset.row=r; cell.dataset.col=c;
+          let key=`${r}-${c}`;
+          cell.textContent=pieces[key]||"";
+          if(selected && validMoves.some(m=>m[0]===r&&m[1]===c)) cell.classList.add("highlight");
+          cell.onclick=()=>cellClick(r,c);
+          board.appendChild(cell);
+        }
+      }
+    }
 
-        <input type="radio" id="q2a2" name="q2" />
-        <label for="q2a2">Lion</label>
+    function isWhitePiece(p){return Object.values(symbols.white).includes(p);}
+    function isBlackPiece(p){return Object.values(symbols.black).includes(p);}
+    function clonePieces(obj){return JSON.parse(JSON.stringify(obj));}
 
-        <input type="radio" id="q2a3" name="q2" />
-        <label for="q2a3">Horse</label>
+    function isKingInCheck(color,state){
+      let kingPos=null;
+      for(const [k,v] of Object.entries(state)){
+        if(color==="white"&&v===symbols.white.king) kingPos=k;
+        if(color==="black"&&v===symbols.black.king) kingPos=k;
+      }
+      if(!kingPos) return false;
+      const [kr,kc]=kingPos.split("-").map(Number);
+      for(const [k,v] of Object.entries(state)){
+        if(color==="white"&&isBlackPiece(v)){
+          if(getMovesFor(v,k,state,"black").some(([r,c])=>r===kr&&c===kc)) return true;
+        }
+        if(color==="black"&&isWhitePiece(v)){
+          if(getMovesFor(v,k,state,"white").some(([r,c])=>r===kr&&c===kc)) return true;
+        }
+      }
+      return false;
+    }
 
-        <input type="radio" id="q2a4" name="q2" />
-        <label for="q2a4">Kangaroo</label>
-      </div>
+    function getLegalMoves(piece,row,col){
+      const moves=getMovesFor(piece,`${row}-${col}`,pieces,currentTurn);
+      return moves.filter(([r,c])=>{
+        let copy=clonePieces(pieces);
+        let from=`${row}-${col}`,to=`${r}-${c}`;
+        copy[to]=copy[from]; delete copy[from];
+        if(piece===symbols.white.pawn && enPassantTarget===to) delete copy[`${row-1}-${c}`];
+        if(piece===symbols.black.pawn && enPassantTarget===to) delete copy[`${row+1}-${c}`];
+        return !isKingInCheck(currentTurn,copy);
+      });
+    }
 
-      <!-- Question 3 -->
-      <div class="question-block">
-        <div class="question-text">Which bird is known for its impressive memory and tool use?</div>
-        <input type="radio" id="q3a1" name="q3" class="correct" />
-        <label for="q3a1">Crow</label>
+    function getMovesFor(piece,key,state,color){
+      let [row,col]=key.split("-").map(Number),moves=[];
+      let isWhite=color==="white";
+      if(piece===symbols.white.pawn||piece===symbols.black.pawn){
+        let dir=isWhite?-1:1,start=isWhite?6:1;
+        if(!state[`${row+dir}-${col}`]) moves.push([row+dir,col]);
+        if(row===start&&!state[`${row+dir}-${col}`]&&!state[`${row+2*dir}-${col}`]) moves.push([row+2*dir,col]);
+        [[dir,-1],[dir,1]].forEach(([dr,dc])=>{
+          let tr=row+dr,tc=col+dc;
+          let target=state[`${tr}-${tc}`];
+          if(target&&((isWhite&&isBlackPiece(target))||(!isWhite&&isWhitePiece(target)))) moves.push([tr,tc]);
+          if(`${tr}-${tc}`===enPassantTarget) moves.push([tr,tc]);
+        });
+      }
+      if(piece===symbols.white.rook||piece===symbols.black.rook) lineMoves([[1,0],[-1,0],[0,1],[0,-1]]);
+      if(piece===symbols.white.bishop||piece===symbols.black.bishop) lineMoves([[1,1],[1,-1],[-1,1],[-1,-1]]);
+      if(piece===symbols.white.queen||piece===symbols.black.queen) lineMoves([[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]);
+      if(piece===symbols.white.knight||piece===symbols.black.knight){
+        [[2,1],[2,-1],[-2,1],[-2,-1],[1,2],[1,-2],[-1,2],[-1,-2]].forEach(([dr,dc])=>{
+          let r=row+dr,c=col+dc;
+          if(r>=0&&r<8&&c>=0&&c<8){
+            let t=state[`${r}-${c}`];
+            if(!t||(isWhite&&isBlackPiece(t))||(!isWhite&&isWhitePiece(t))) moves.push([r,c]);
+          }
+        });
+      }
+      if(piece===symbols.white.king||piece===symbols.black.king){
+        [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]].forEach(([dr,dc])=>{
+          let r=row+dr,c=col+dc;
+          if(r>=0&&r<8&&c>=0&&c<8){
+            let t=state[`${r}-${c}`];
+            if(!t||(isWhite&&isBlackPiece(t))||(!isWhite&&isWhitePiece(t))) moves.push([r,c]);
+          }
+        });
+        // Castling is already here...
+      }
+      function lineMoves(dirs){dirs.forEach(([dr,dc])=>{let r=row+dr,c=col+dc;while(r>=0&&r<8&&c>=0&&c<8){let t=state[`${r}-${c}`];if(!t)moves.push([r,c]);else{if((isWhite&&isBlackPiece(t))||(!isWhite&&isWhitePiece(t)))moves.push([r,c]);break;}r+=dr;c+=dc;}});}
+      return moves;
+    }
 
-        <input type="radio" id="q3a2" name="q3" />
-        <label for="q3a2">Parrot</label>
+    function promotePawn(r,c,piece){
+      if(piece===symbols.white.pawn && r===0) pieces[`${r}-${c}`]=symbols.white.queen;
+      if(piece===symbols.black.pawn && r===7) pieces[`${r}-${c}`]=symbols.black.queen;
+    }
 
-        <input type="radio" id="q3a3" name="q3" />
-        <label for="q3a3">Eagle</label>
+    function cellClick(r,c){
+      let key=`${r}-${c}`;
+      if(selected){
+        if(validMoves.some(([mr,mc])=>mr===r&&mc===c)){
+          let from=`${selected[0]}-${selected[1]}`;
+          let piece=pieces[from];
+          if(piece===symbols.white.pawn&&enPassantTarget===key) delete pieces[`${r+1}-${c}`];
+          if(piece===symbols.black.pawn&&enPassantTarget===key) delete pieces[`${r-1}-${c}`];
+          pieces[key]=piece; delete pieces[from];
+          // Pawn promotion
+          promotePawn(r,c,piece);
+          // Castling rook move
+          if(piece===symbols.white.king){
+            if(from==="7-4"&&key==="7-6"){pieces["7-5"]=symbols.white.rook;delete pieces["7-7"];}
+            if(from==="7-4"&&key==="7-2"){pieces["7-3"]=symbols.white.rook;delete pieces["7-0"];}
+            hasMoved.whiteKing=true;
+          }
+          if(piece===symbols.black.king){
+            if(from==="0-4"&&key==="0-6"){pieces["0-5"]=symbols.black.rook;delete pieces["0-7"];}
+            if(from==="0-4"&&key==="0-2"){pieces["0-3"]=symbols.black.rook;delete pieces["0-0"];}
+            hasMoved.blackKing=true;
+          }
+          if(piece===symbols.white.rook){if(from==="7-0")hasMoved.whiteRookA=true;if(from==="7-7")hasMoved.whiteRookH=true;}
+          if(piece===symbols.black.rook){if(from==="0-0")hasMoved.blackRookA=true;if(from==="0-7")hasMoved.blackRookH=true;}
+          enPassantTarget=null;
+          if(piece===symbols.white.pawn&&from.startsWith("6")&&r===4) enPassantTarget=`5-${c}`;
+          if(piece===symbols.black.pawn&&from.startsWith("1")&&r===3) enPassantTarget=`2-${c}`;
+          currentTurn=currentTurn==="white"?"black":"white";
+          turnDisplay.textContent="Turn: "+currentTurn[0].toUpperCase()+currentTurn.slice(1);
+        }
+        selected=null; validMoves=[];
+      } else {
+        let piece=pieces[key];
+        if(piece&&((currentTurn==="white"&&isWhitePiece(piece))||(currentTurn==="black"&&isBlackPiece(piece)))){
+          selected=[r,c];
+          validMoves=getLegalMoves(piece,r,c);
+        }
+      }
+      renderBoard();
+    }
 
-        <input type="radio" id="q3a4" name="q3" />
-        <label for="q3a4">Sparrow</label>
-      </div>
-
-      <!-- Question 4 -->
-      <div class="question-block">
-        <div class="question-text">How many legs does a spider have?</div>
-        <input type="radio" id="q4a1" name="q4" class="correct" />
-        <label for="q4a1">8</label>
-
-        <input type="radio" id="q4a2" name="q4" />
-        <label for="q4a2">6</label>
-
-        <input type="radio" id="q4a3" name="q4" />
-        <label for="q4a3">10</label>
-
-        <input type="radio" id="q4a4" name="q4" />
-        <label for="q4a4">4</label>
-      </div>
-
-      <!-- Question 5 -->
-      <div class="question-block">
-        <div class="question-text">What is a group of lions called?</div>
-        <input type="radio" id="q5a1" name="q5" class="correct" />
-        <label for="q5a1">Pride</label>
-
-        <input type="radio" id="q5a2" name="q5" />
-        <label for="q5a2">Herd</label>
-
-        <input type="radio" id="q5a3" name="q5" />
-        <label for="q5a3">Pack</label>
-
-        <input type="radio" id="q5a4" name="q5" />
-        <label for="q5a4">Flock</label>
-      </div>
-    </form>
-  </div>
+    setupPieces(); renderBoard();
+  </script>
 </body>
 </html>
